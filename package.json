@@ -15,7 +15,7 @@
     "tailwindcss": "^3.4.17"
   },
   "scripts": {
-    "test": "node --test tests/*.test.js",
+    "test": "node --test "
     "build:css": "tailwindcss -i input.css -o www/styles.css --minify"
   }
 }
