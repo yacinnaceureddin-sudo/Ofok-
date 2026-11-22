@@ -1,0 +1,7 @@
+const {test}=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');
+const html=fs.readFileSync('www/index.html','utf8'),app=fs.readFileSync('www/app.js','utf8'),model=fs.readFileSync('www/model.js','utf8');
+test('Arabic RTL OFOQ identity and five navigation tabs',()=>{assert.match(html,/<html lang="ar" dir="rtl"/);assert.match(html,/<title>أفق \| OFOQ/);assert.equal((html.match(/class="nav-btn/g)||[]).length,5);assert.match(html,/Cairo/);});
+test('store, products, orders, clients and AI sections are present',()=>{for(const id of ['page-home','page-store','page-products','page-orders','page-account','page-ai','storeForm','productForm','orderForm','generateAI'])assert.ok(html.includes(`id="${id}"`),id);});
+test('application wires local persistence and business operations',()=>{for(const phrase of ['localStorage.getItem(KEY)','localStorage.setItem(KEY','Ofoq.makeProduct','Ofoq.makeOrder','s.products.unshift(p)','s.orders.push(o)','s.clients.push','exportData','importData'])assert.ok(app.includes(phrase),phrase);});
+test('palette uses Bleu Gauloises and avoids the previous emerald palette',()=>{assert.match(html,/--blue:#244f89/);assert.match(html,/--sky:#70b8ef/);assert.doesNotMatch(html,/--green:#10B981/i);});
+test('local app assets do not require remote scripts or stylesheets',()=>{for(const match of html.matchAll(/(?:src|href)="(https?:[^\"]+)"/g))assert.fail('Remote dependency found: '+match[1]);assert.match(html,/src="model\.js"/);assert.match(html,/src="app\.js"/);});

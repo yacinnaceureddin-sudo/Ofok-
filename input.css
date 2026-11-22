@@ -1,0 +1,5 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+[data-filter][aria-pressed="true"]{background:#313540;color:#4edea3;}
+button:disabled{cursor:not-allowed;}
